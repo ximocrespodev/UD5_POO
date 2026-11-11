@@ -30,12 +30,13 @@ public class CajaFuerte {
     public void intentarAbrir(String codigoIntento, double cantidad){
 
 
-        if (!getEstaBloqueada()){
+        if (getEstaBloqueada()){
             System.out.println("ALERTA ALERTA ALERTA: Viene don cangrejo");
         
         }else if(codigoIntento.equals(getCodigoSecreto())){
             System.out.println("ACCESO CON EXITO");
             setDineroRobado(cantidad + getDineroRobado());
+            setIntentos(3);
         }else{
             setIntentos(intentosRestantes-1);
             System.out.println("CODIGO INTRODUCIDO INCORRECTO");
@@ -45,6 +46,19 @@ public class CajaFuerte {
         }
 
 
+
+    }
+
+    @Override 
+    public String toString(){
+
+        if (estaBloqueada) {
+            return "SE ENCUENTRA BLOQUEADA";
+
+        }else{
+            return "SE ENCUENTRA ABIERTA";
+
+        }
 
     }
 
