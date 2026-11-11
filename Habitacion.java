@@ -38,7 +38,7 @@ public class Habitacion {
     public void setTipo(String tipo){
         this.tipo = tipo;
     }
-    public void setPrecioNoche(int precio_nuevo){
+    public void setPrecioNoche(double precio_nuevo){
         this.precioNoche = precio_nuevo;
     }
     public void setOcupada(boolean opcion){
