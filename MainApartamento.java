@@ -5,7 +5,7 @@ public class MainApartamento {
 
     public static void cabecera(){
 
-        System.out.println("""
+        System.out.print("""
                 
                 ===================================================
                 GESTIÓN DE APARTAMENTO TURÍSTICO (AIRBNB)
@@ -31,7 +31,23 @@ public class MainApartamento {
 
         Scanner teclado = new Scanner(System.in);
 
-        Apartamento ap1 = new Apartamento("DisneyLand AP1", "Av. Lincon Street 45", "Paris", 500);
+        System.out.print("Introduce el nombre del Apartamento: ");
+        String nombreAPT = teclado.nextLine();
+
+        System.out.print("Introduce la direccion del Apartamento: ");
+        String direccionAPT = teclado.nextLine();
+
+        System.out.print("Introduce la ciudad del apartamento: ");
+        String ciudadAPT = teclado.nextLine();
+
+        System.out.print("Introduce el precio inicial por noche: ");
+        int precioInicialAPT = teclado.nextInt();
+
+        System.out.print("Numero de huespedes inicial: ");
+        int numeroHuespedesAPT = teclado.nextInt();
+
+
+        Apartamento ap1 = new Apartamento(nombreAPT, direccionAPT, ciudadAPT, precioInicialAPT, numeroHuespedesAPT);
 
 
         int op;
@@ -49,23 +65,31 @@ public class MainApartamento {
                     break;
 
                 case 2:
-                    System.out.println("Introduce una noche a reservar: ");
-                    int dia = teclado.nextInt();
 
-                    System.out.println("Introduce un mes a reservar: ");
+                    System.out.print("Mes (1-12): ");
                     int mes = teclado.nextInt();
 
-                    ap1.reservar(mes-1, dia-1);
+                    System.out.print("Día: ");
+                    int dia = teclado.nextInt();
+
+                    System.out.print("Introduce el numero de huespedes: ");
+                    int numeroHuespedesReserva = teclado.nextInt();
+
+
+
+                    ap1.reservar(mes-1, dia-1, numeroHuespedesReserva);
                     break;
 
 
                 case 3:
 
-                    System.out.println("Introduce una noche a liberar: ");
+                    System.out.print("Mes (1-12): ");
+                    int mes_liberar = teclado.nextInt();
+
+                    System.out.print("Día: ");
                     int dia_liberar = teclado.nextInt();
 
-                    System.out.println("Introduce un mes a liberar: ");
-                    int mes_liberar = teclado.nextInt();
+
 
                     ap1.liberar(mes_liberar-1, dia_liberar-1);
                     break;
@@ -73,24 +97,26 @@ public class MainApartamento {
 
                 case 4:
 
-                    System.out.println("Introduce una noche para comprobar: ");
+                    System.out.print("Mes (1-12): ");
+                    int mes_comprobar = teclado.nextInt();
+
+                    System.out.print("Día: ");
                     int dia_comprobar = teclado.nextInt();
 
-                    System.out.println("Introduce un mes a comprobar: ");
-                    int mes_comprobar = teclado.nextInt();
 
                     if (ap1.estaOcupado(dia_comprobar-1, mes_comprobar-1)){
                         System.out.println("El apartameno se encuentra ocupado el dia " + dia_comprobar + " del mes " + ap1.nombreMes(mes_comprobar-1));
-                     }
+                     }else {
+                        System.out.println("El apartamento se encuentra libre para esas fechas.");
+                    }
                     break;
 
 
 
                 case 5:
 
-                    System.out.println("Introduce que mes quieres mostrar: ");
 
-                    System.out.println("Introduce un mes a comprobar: ");
+                    System.out.print("Mes (1-12): ");
                     int mes_mostrar = teclado.nextInt();
                     ap1.mostrarCalendarioMensual(mes_mostrar-1);
                     break;
@@ -102,7 +128,7 @@ public class MainApartamento {
 
                 case 7:
 
-                    System.out.println("Introduce un mes a comprobar: ");
+                    System.out.print("Mes (1-12): ");
                     int ben_mes = teclado.nextInt();
 
                     ap1.beneficiosMes(ben_mes-1);
@@ -118,6 +144,11 @@ public class MainApartamento {
                     break;
 
 
+                default:
+                    System.out.println("Debes introducir una opción para continuar...");
+                    break;
+
+
 
             }
 
@@ -127,7 +158,7 @@ public class MainApartamento {
 
 
 
-        }while (op !=0 && op>=1 && op<=8);
+        }while (op !=0);
 
 
 

@@ -5,6 +5,7 @@ public class Apartamento {
     private String ciudad;
     private int precio_noche;
     private boolean[][] reservas;
+    private int numeroHuespedes;
 
 
             private static final int[] DIAS_MES = {31, 28, 31, 30, 31, 30,
@@ -13,13 +14,14 @@ public class Apartamento {
             private static final String[] MESES_ESCRITO = {"Enero", "Febrero" ,"Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
 
             //CONSTRUCTOR
-            public Apartamento(String nombre, String direccion, String ciudad, int precioNoche) {
+            public Apartamento(String nombre, String direccion, String ciudad, int precioNoche, int numeroHuespedes) {
 
                 this.nombre = nombre;
                 this.direccion = direccion;
                 this.ciudad = ciudad;
                 this.precio_noche = precioNoche;
                 this.reservas = new boolean[12][];
+                this.numeroHuespedes = numeroHuespedes;
 
                 //Creamos las subarrays dentro del mes
                 for (int mes = 0; mes < 12; mes++) {
@@ -39,23 +41,28 @@ public class Apartamento {
             public void setPrecioNoche(int precio){
                 this.precio_noche = precio;
             }
+            public void setNumeroHuespedes(int numero){this.numeroHuespedes = numero;}
+
             public String getNombre(){return this.nombre;}
             public String getDireccion(){return this.direccion;}
             public String getCiudad(){return this.ciudad;}
             public int getPrecioNoche(){return this.precio_noche;}
+            public int getNumeroHuespedes(){return this.numeroHuespedes;}
 
             @Override
             public String toString(){
-                return "Nombre: " + getNombre() + " Direccion: " + getDireccion() + " Precio PN: " + getPrecioNoche() +"€";
+                return "Nombre: " + getNombre() + " Direccion: " + getDireccion() + " Precio PN: " + getPrecioNoche() +"€ Numero de huespedes:" + getNumeroHuespedes();
             }
 
-            public void reservar(int mes, int dia){
+            public void reservar(int mes, int dia, int numeroHuespedes){
 
                 if (!esFechaValida(mes, dia)){
                     System.out.println("ERROR: La fecha introducida no es valida.");
                 }else if (estaOcupado(mes, dia)){
                     System.out.println("ERROR: El alojamiento ya se encuentra reservado en esas fechas.");
-                }else {
+                } else if (numeroHuespedes>getNumeroHuespedes()) {
+                    System.out.println("ERROR: El numero de huespedes es mayor al permitido");
+                } else {
                     this.reservas[mes][dia] = true;
                     System.out.println("Noche del día " + (dia+1) + " de " + nombreMes(mes) + " reservada.");
                 }
@@ -144,6 +151,18 @@ public class Apartamento {
 
             }
 
+            public int totalDiasLibres(int mes){
+                int libre = 0;
+
+                for (int i = 0; i<=this.reservas[mes].length-1; i++){
+
+                    if (!estaOcupado(mes, i)){
+                        libre++;
+                    }
+                }
+                return libre;
+            }
+
             public int totalDiasOcupados(int mes){
 
                 int ocupado = 0;
@@ -181,13 +200,13 @@ public class Apartamento {
 
                 System.out.println("--- BENEFICIOS DE " + nombreMes(mes) + "---");
 
-                System.out.println("Noches ocupadas: " + totalDiasOcupados(mes));
-                System.out.println("Precio por noche: " + getPrecioNoche() + "€");
-                System.out.println("Beneficio bruto: " + bruto + "€");
-                System.out.println("Suministros (5%): " + suministros);
-                System.out.println("Limpieza (5%): " + limpieza);
-                System.out.println("Impuestos (30%): " + impuestos);
-                System.out.println("Beneficio neto: " + neto);
+                System.out.println("Noches ocupadas:   " + totalDiasOcupados(mes));
+                System.out.println("Precio por noche:   " + getPrecioNoche() + "€");
+                System.out.println("Beneficio bruto:   " + bruto + "€");
+                System.out.println("Suministros (5%):   " + suministros);
+                System.out.println("Limpieza (5%):   " + limpieza);
+                System.out.println("Impuestos (30%):   " + impuestos);
+                System.out.println("Beneficio neto:   " + neto);
 
             }
             public void beneficiosAno(){
@@ -201,13 +220,13 @@ public class Apartamento {
 
                 System.out.println("--- BENEFICIOS DEL AÑO---");
 
-                System.out.println("Noches ocupadas: " + totalDiasOcupadosAnyo());
-                System.out.println("Precio por noche: " + getPrecioNoche() + "€");
-                System.out.println("Beneficio bruto: " + bruto + "€");
-                System.out.println("Suministros (5%): " + suministros);
-                System.out.println("Limpieza (5%): " + limpieza);
-                System.out.println("Impuestos (30%): " + impuestos);
-                System.out.println("Beneficio neto: " + neto);
+                System.out.println("Noches ocupadas:   " + totalDiasOcupadosAnyo());
+                System.out.println("Precio por noche:   " + getPrecioNoche() + "€");
+                System.out.println("Beneficio bruto:   " + bruto + "€");
+                System.out.println("Suministros (5%):   " + suministros);
+                System.out.println("Limpieza (5%):   " + limpieza);
+                System.out.println("Impuestos (30%):   " + impuestos);
+                System.out.println("Beneficio neto:   " + neto);
 
 
             }
