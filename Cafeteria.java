@@ -33,6 +33,87 @@ public class Cafeteria {
     public int getNum_mesas(){return this.num_mesas;}
     public boolean getEstaAbierta(){return this.estaAbierto;}
 
+    public boolean ocuparMesa(int mesa){
+
+        if (mesas[mesa]){
+            return false;
+        }else {
+            mesas[mesa] = true;
+            return true;
+        }
+
+
+    }
+
+    public boolean librerarMesa(int mesa){
+
+        if (!mesas[mesa]){
+            return false;
+        }else {
+            mesas[mesa] = false;
+            return true;
+        }
+
+    }
+
+    public boolean consultarMesa(int mesa){
+        return mesas[mesa];
+
+    }
+
+    public void mostrarMesas(){
+
+        System.out.println("==========ESTADO DE LAS MESAS===========");
+        for (int i = 0; i<mesas.length; i++){
+            System.out.print("Mesa " + (i+1) + ": " );
+
+            if (!mesas[i]){
+                System.out.print("LIBRE");
+            }else {
+                System.out.print("OCUPADO");
+
+            }
+            System.out.println();
+
+        }
+
+    }
+
+    public void estadisticas(){
+
+        System.out.println("========== ESTADÍSTICAS DE OCUPACIÓN ==========");
+        System.out.println();
+        System.out.print("Mesas totales: " + getNum_mesas());
+
+        System.out.print("Mesas ocupadas: " + mesasTotalesOcupadas());
+        System.out.print("Mesas libres: " + (getNum_mesas()-mesasTotalesOcupadas()));
+        System.out.print("Porcentaje de ocupación: " + mesasTotalesOcupadas()/getNum_mesas()*100 + " %");
+
+
+
+
+    }
+
+    public void calcularIngresosEstimados(int mesasOcupadas){
+        System.out.println("========== INGRESOS ESTIMADOS ==========");
+        System.out.println("Mesas ocupadas: " + mesasOcupadas + " €");
+        System.out.println("Precio medio: " + mesasOcupadas*getPrecio_medio() + " €");
+
+
+    }
+
+    public int mesasTotalesOcupadas(){
+
+        int contador = 0;
+        for (int i = 0; i<this.mesas.length; i++){
+            if (mesas[i]){
+                contador++;
+            }
+        }
+        return contador;
+
+    }
+
     @Override
     public String toString(){
 
